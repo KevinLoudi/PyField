@@ -8,9 +8,9 @@ Created on Mon Jan  1 14:08:13 2018
 import sys
 from PyQt5.QtWidgets import (QWidget, QToolTip, 
     QPushButton, QApplication, QMessageBox,QDesktopWidget, QMainWindow,
-    QAction, qApp, QMenu)
+    QAction, qApp, QMenu, QWidget, QLCDNumber, QSlider, QVBoxLayout)
 from PyQt5.QtGui import (QFont, QIcon)   
-from PyQt5.QtCore import QCoreApplication 
+from PyQt5.QtCore import (QCoreApplication, Qt) 
 
 
 
@@ -30,33 +30,38 @@ class Example(QMainWindow): #(QWidget):
 #        exitAct.setStatusTip('Exit Application') #status tip
 #        exitAct.triggered.connect(qApp.quit) #emit trigger signal 
 #        
+         # add menu
 #        self.statusBar()
 #        #create a menu bar
 #        menuBar = self.menuBar() 
 #        fileMenu = menuBar.addMenu('&File')
 #        fileMenu.addAction(exitAct) #contain one action to end the app
+#        menuBar = self.menuBar()
+#        fileMenu = menuBar.addMenu('File')
+#        impMenu = QMenu('Import', self)
+#        impAct = QAction('Import mail', self)
+#        impMenu.addAction(impAct)
+#        newAct = QAction('New', self)
+#        fileMenu.addAction(newAct)
+#        fileMenu.addMenu(impMenu)
         
-        menuBar = self.menuBar()
-        fileMenu = menuBar.addMenu('File')
+#        self.statusBar().showMessage('Ready') #from method of QMainWindow, display message on status bar
+#        QToolTip.setFont(QFont('SansSerif', 10)) #tool tip font
+#        self.setToolTip('This is a <b>QWidget</b> widget') #tooltip for menu, rich text format
         
-        impMenu = QMenu('Import', self)
-        impAct = QAction('Import mail', self)
-        impMenu.addAction(impAct)
+        #LCD Event driver
+        lcd = QLCDNumber(self)
+        sld = QSlider(Qt.Horizontal, self)
+        vbox = QVBoxLayout()
+        vbox.addWidget(lcd)
+        vbox.addWidget(sld)
+        self.setLayout(vbox)
+        sld.valueChanged.connect(lcd.display)
         
-        newAct = QAction('New', self)
-        
-        fileMenu.addAction(newAct)
-        fileMenu.addMenu(impMenu)
-        
-        self.statusBar().showMessage('Ready') #from method of QMainWindow, display message on status bar
-        
-        QToolTip.setFont(QFont('SansSerif', 10)) #tool tip font
-        self.setToolTip('This is a <b>QWidget</b> widget') #tooltip for menu, rich text format
-        
-        btn = QPushButton('Button', self)
-        btn.setToolTip('This is a <b>QPushButton</b> widget')
-        btn.resize(btn.sizeHint()) #give a recommend size for button
-        btn.move(50, 50)       
+#        btn = QPushButton('Button', self)
+#        btn.setToolTip('This is a <b>QPushButton</b> widget')
+#        btn.resize(btn.sizeHint()) #give a recommend size for button
+#        btn.move(50, 50)       
         
         #cannot work well
 #        btnQuit = QPushButton('Quit', self)
@@ -64,9 +69,9 @@ class Example(QMainWindow): #(QWidget):
 #        btnQuit.resize(btnQuit.sizeHint())
 #        btnQuit.move(50, 80)
         
-        #self.setGeometry(300, 300, 900, 600) #locate and set size of window
-        self.resize(900, 600)
-        self.center() #put window in the center
+        self.setGeometry(300, 300, 900, 600) #locate and set size of window
+        #self.resize(900, 600)
+        #self.center() #put window in the center
         self.setWindowTitle('Example of Centerialized Window')    
         self.show()
         
